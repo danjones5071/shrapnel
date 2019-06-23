@@ -16,7 +16,7 @@ These instructions will get a copy of the project up and running on your local m
 ### Linters
 
 ## Contributing
-Please read (CONTRIBUTING.md)[CONTRIBUTING.md] for details on the process for development and submission of pull requests.
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on the process for development and submission of pull requests.
 
 ## Versioning
 [SemVer](http://semver.org/) is used for versioning.
