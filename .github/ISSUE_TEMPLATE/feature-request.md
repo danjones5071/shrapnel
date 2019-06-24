@@ -7,7 +7,7 @@ assignees: ''
 
 ---
 
-:gift: As a [ROLE] I want [GOAL/FEATURE] in order to [BENEFIT].
+:gift: As a [ROLE], I want [GOAL/FEATURE] in order to [BENEFIT].
 
 **Acceptance Criteria:**
 * List all of the criteria that must be met for the feature to be considered fully implemented.
