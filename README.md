@@ -4,12 +4,15 @@ A project management and issue tracking tool intended to be freely available for
 ## Project Requirements
 The requirements document for Shrapnel can be reviewed [here](https://github.com/danjones5071/shrapnel-srs/blob/master/Shrapnel%20Requirements%20Specification.pdf).
 
+## Prerequisites
+* Ruby 2.6.3
+* Rails 5.2.3
+* Bundler 1.17.2
+* Yarn 1.16.0
+
 ## Getting Started
 These instructions will get a copy of the project up and running on your local machine for development and testing purposes.
 1. Run `git clone https://github.com/danjones5071/shrapnel` to clone the repository to your local machine.
-
-## Prerequisites
-* Rails 5
 
 ## Testing
 ### Running Tests
