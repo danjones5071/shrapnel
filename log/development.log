@@ -35,3 +35,12 @@ Processing by SiteController#index as HTML
 Completed 200 OK in 15ms (Views: 14.9ms | ActiveRecord: 0.0ms)
 
 
+Started GET "/" for 127.0.0.1 at 2019-07-23 22:22:46 -0400
+Processing by SiteController#index as HTML
+  Rendering site/index.html.erb within layouts/application
+  Rendered site/index.html.erb within layouts/application (0.3ms)
+[Webpacker] Compiling…
+[Webpacker] Compiled all packs in /home/dan/Desktop/git/shrapnel/public/packs
+Completed 200 OK in 7041ms (Views: 7038.0ms | ActiveRecord: 0.0ms)
+
+
