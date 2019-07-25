@@ -107,3 +107,14 @@ Processing by SiteController#index as HTML
 Completed 200 OK in 710ms (Views: 700.7ms | ActiveRecord: 0.0ms)
 
 
+Started GET "/" for 127.0.0.1 at 2019-07-25 00:28:37 -0400
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ /home/dan/.rvm/gems/ruby-2.6.3/gems/activerecord-5.2.3/lib/active_record/log_subscriber.rb:98
+Processing by SiteController#index as HTML
+  Rendering site/index.html.erb within layouts/application
+  Rendered site/index.html.erb within layouts/application (1.1ms)
+[Webpacker] Compiling…
+[Webpacker] Compiled all packs in /home/dan/Desktop/git/shrapnel/public/packs
+Completed 200 OK in 7235ms (Views: 7232.0ms | ActiveRecord: 0.0ms)
+
+
