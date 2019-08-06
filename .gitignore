@@ -1,4 +1,9 @@
+# Ignore node
 node_modules
+
+# Ignore log files and temp files
+/log/*
+/tmp/*
 
 /public/packs
 /public/packs-test

@@ -1,0 +1,38 @@
+[
+    {
+      "issue_type": "Story",
+      "subject": "Add some feature to the project",
+      "description": "We are trying to add an awesome feature our users will really like.",
+      "issue_status": "In Progress",
+      "assignee": "Alice",
+      "estimate": 3,
+      "due_date": "05-01-2020"
+    },
+    {
+        "issue_type": "Epic",
+        "subject": "Add a big chunk of functionality",
+        "description": "This is a really big piece of functionality that can be broken down into smaller stories and tasks.",
+        "issue_status": "Backlog",
+        "assignee": "Bob",
+        "estimate": 20,
+        "due_date": "05-01-2020"
+    },
+    {
+        "issue_type": "Task",
+        "subject": "Make a small change",
+        "description": "This is a small change that needs to be made, possibly a prerequisite to completing a story.",
+        "issue_status": "In Review",
+        "assignee": "Charlie",
+        "estimate": 1,
+        "due_date": "05-01-2020"
+    },
+    {
+        "issue_type": "Story",
+        "subject": "Create base project",
+        "description": "This establishes a base project for all collaborators to build off of.",
+        "issue_status": "Complete",
+        "assignee": "Dan",
+        "estimate": 1,
+        "due_date": "05-01-2020"
+      }
+  ]
