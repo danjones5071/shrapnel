@@ -7,31 +7,31 @@ assignees: ''
 
 ---
 
-:bug: A clear and concise description of the bug.
+:bug: Provide a clear and concise description of the bug.
 
-**To Reproduce**
-Steps to reproduce the behavior:
+### Steps to Reproduce
+Perform the following steps to reproduce the incorrect behavior:
 1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+2. Click on '...'
+3. Scroll down to '...'
+4. See error message
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+### Expected Behavior
+Provide A clear and concise description of what you expected to happen.
 
-**Screenshots**
+### Screenshots
 If applicable, add screenshots to help explain your problem.
 
-**Desktop (please complete the following information):**
+### Desktop Information
  - OS: [e.g. iOS]
  - Browser [e.g. chrome, safari]
  - Version [e.g. 22]
 
-**Smartphone (please complete the following information):**
+### Smartphone Information
  - Device: [e.g. iPhone6]
  - OS: [e.g. iOS8.1]
  - Browser [e.g. stock browser, safari]
  - Version [e.g. 22]
 
-**Additional context**
+### Additional Context
 Add any other context about the problem here.
