@@ -18,6 +18,8 @@ module Api::V1
       respond_with Issue.destroy(params[:id])
     end
 
+    private
+
     def issue_params
       params.require(:issue).permit(
         :id,
