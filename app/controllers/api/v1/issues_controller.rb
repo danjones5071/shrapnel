@@ -14,6 +14,10 @@ module Api::V1
       respond_with :api, :v1, Issue.create(issue_params)
     end
 
+    def destroy
+      respond_with Issue.destroy(params[:id])
+    end
+
     def issue_params
       params.require(:issue).permit(
         :id,
