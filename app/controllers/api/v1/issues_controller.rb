@@ -9,5 +9,22 @@ module Api::V1
     def show
       respond_with Issue.find(params[:id])
     end
+
+    def create
+      respond_with :api, :v1, Issue.create(issue_params)
+    end
+
+    def issue_params
+      params.require(:issue).permit(
+        :id,
+        :issue_type,
+        :subject,
+        :description,
+        :issue_status,
+        :assignee,
+        :estimate,
+        :due_date
+      )
+    end
   end
 end
