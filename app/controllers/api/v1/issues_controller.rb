@@ -14,6 +14,12 @@ module Api::V1
       respond_with :api, :v1, Issue.create(issue_params)
     end
 
+    def update
+      issue = Issue.find(params['id'])
+      issue.update(issue_params)
+      respond_with Issue, json: issue
+    end
+
     def destroy
       respond_with Issue.destroy(params[:id])
     end
