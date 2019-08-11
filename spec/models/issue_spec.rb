@@ -4,8 +4,8 @@ RSpec.describe Issue, type: :model do
   let(:issue) { create(:issue) }
 
   describe 'length validations' do
-    it { should validate_length_of(:issue_type).is_at_most(32) }
-    it { should validate_length_of(:issue_status).is_at_most(32) }
+    it { should validate_length_of(:issue_type).is_at_most(36) }
+    it { should validate_length_of(:issue_status).is_at_most(36) }
   end
 
   describe 'presence validations' do
