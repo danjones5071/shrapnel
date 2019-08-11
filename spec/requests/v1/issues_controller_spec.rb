@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'faker'
 
 RSpec.describe 'IssuesController', type: :request do
 
