@@ -71,9 +71,10 @@ RSpec.describe 'IssuesController', type: :request do
         end
         it 'returns an issue with all the expected keys' do
           issue_att = FactoryBot.attributes_for :issue
-          parsed_response = JSON.parse(response.body)
           issue_att.stringify_keys!
-          expect(parsed_response.keys.without("id", "created_at", "updated_at")).to eq(issue_att.keys)
+          parsed_response = JSON.parse(response.body)
+          excluded = ["id", "created_at", "updated_at"]
+          expect(parsed_response.keys.without(*excluded)).to eq(issue_att.keys)
         end
       end
       context 'when the specified issue ID does not exist' do
@@ -128,12 +129,9 @@ RSpec.describe 'IssuesController', type: :request do
         end
         it 'returns a response contaning the same attributes as the request' do
           parsed_response = JSON.parse(response.body)
-          to_exclude = ["id", "created_at", "updated_at"]
-          to_exclude.each do |excluded|
-            parsed_response.delete(excluded)
-          end
+          excluded = ["id", "created_at", "updated_at"]
           parsed_att = JSON.parse(issue_att.to_json)
-          expect(parsed_response).to eq(parsed_att)
+          expect(parsed_response.without(*excluded)).to eq(parsed_att)
         end
       end
       context 'when all optional attributes are missing' do
@@ -155,12 +153,9 @@ RSpec.describe 'IssuesController', type: :request do
         end
         it 'returns a response contaning the same attributes as the request' do
           parsed_response = JSON.parse(response.body).compact
-          to_exclude = ["id", "created_at", "updated_at"]
-          to_exclude.each do |excluded|
-            parsed_response.delete(excluded)
-          end
+          excluded = ["id", "created_at", "updated_at"]
           parsed_att = JSON.parse(issue_att.to_json)
-          expect(parsed_response).to eq(parsed_att)
+          expect(parsed_response.without(*excluded)).to eq(parsed_att)
         end
       end
       context 'with one missing attribute' do
