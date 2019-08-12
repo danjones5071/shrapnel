@@ -1,12 +1,12 @@
 [
     {
-      "issue_type": "Story",
-      "subject": "Add some feature to the project",
-      "description": "We are trying to add an awesome feature our users will really like.",
-      "issue_status": "In Progress",
       "assignee": "Alice",
+      "description": "We are trying to add an awesome feature our users will really like.",
+      "due_date": "05-01-2020",
       "estimate": 3,
-      "due_date": "05-01-2020"
+      "issue_status": "In Progress",
+      "issue_type": "Story",
+      "subject": "Add some feature to the project"
     },
     {
         "issue_type": "Epic",

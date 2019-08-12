@@ -29,13 +29,13 @@ module Api::V1
     def issue_params
       params.require(:issue).permit(
         :id,
-        :issue_type,
-        :subject,
-        :description,
-        :issue_status,
         :assignee,
+        :description,
+        :due_date,
         :estimate,
-        :due_date
+        :issue_status,
+        :issue_type,
+        :subject
       )
     end
   end
