@@ -46,10 +46,9 @@ RSpec.describe 'IssuesController', type: :request do
       before(:all) do
         DatabaseCleaner.clean_with(:truncation)
       end
-      it 'throws a record not found error' do
-        expect {
-          get "/api/v1/issues/1", as: :json
-        }.to raise_error(ActiveRecord::RecordNotFound)
+      it 'returns a 404 not found response code' do
+        get "/api/v1/issues/1", as: :json
+        expect(response).to have_http_status(:not_found)
       end
     end
     context 'when there are existing issues' do
@@ -78,31 +77,27 @@ RSpec.describe 'IssuesController', type: :request do
         end
       end
       context 'when the specified issue ID does not exist' do
-        it 'throws a record not found error' do
-          expect {
-            get "/api/v1/issues/#{issue_count + 1}", as: :json
-          }.to raise_error(ActiveRecord::RecordNotFound)
+        it 'returns a 404 not found response code' do
+          get "/api/v1/issues/#{issue_count + 1}", as: :json
+          expect(response).to have_http_status(:not_found)
         end
       end
       context 'when an ID of 0 is requested' do
-        it 'throws a record not found error' do
-          expect {
-            get "/api/v1/issues/0", as: :json
-          }.to raise_error(ActiveRecord::RecordNotFound)
+        it 'returns a 404 not found response code' do
+          get "/api/v1/issues/0", as: :json
+          expect(response).to have_http_status(:not_found)
         end
       end
       context 'when a negative ID is requested' do
-        it 'throws a record not found error' do
-          expect {
-            get "/api/v1/issues/-1", as: :json
-          }.to raise_error(ActiveRecord::RecordNotFound)
+        it 'returns a 404 not found response code' do
+          get "/api/v1/issues/-1", as: :json
+          expect(response).to have_http_status(:not_found)
         end
       end
       context 'when a non-numerical ID is requested' do
-        it 'throws a record not found error' do
-          expect {
-            get "/api/v1/issues/invalid", as: :json
-          }.to raise_error(ActiveRecord::RecordNotFound)
+        it 'returns a 404 not found response code' do
+          get "/api/v1/issues/invalid", as: :json
+          expect(response).to have_http_status(:not_found)
         end
       end
     end
