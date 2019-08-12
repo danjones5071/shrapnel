@@ -28,7 +28,6 @@ RSpec.describe 'IssuesController', type: :request do
         get "/api/v1/issues", as: :json
       end
       it 'returns a 200 success response code' do
-        puts response.body
         expect(response).to have_http_status(:ok)
       end
       it 'returns a non-nil response' do
