@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'IssuesController', type: :request do
+RSpec.describe 'Issues Controller', type: :request do
 
   # GET
   describe 'Retrieving all issues' do
@@ -184,6 +184,21 @@ RSpec.describe 'IssuesController', type: :request do
           expect(response).to have_http_status(:unprocessable_entity)
         end
       end
+      context 'when the request body contains an additional attribute' do
+        issue_att = FactoryBot.attributes_for :issue
+        excluded = ["id", "created_at", "updated_at"]
+        before(:all) do
+          post "/api/v1/issues", { params: issue_att.merge(unknown: 'abcd'), as: :json }
+        end
+        it 'returns a 201 created response code' do
+          expect(response).to have_http_status(:created)
+        end
+        it 'returns a response body containing correct attributes' do
+          parsed_response = JSON.parse(response.body)
+          parsed_att = JSON.parse(issue_att.to_json)
+          expect(parsed_response.without(*excluded)).to eq(parsed_att)
+        end
+      end
       context 'when the request body is empty' do
         it 'throws a param missing error' do
           expect {
@@ -199,6 +214,138 @@ RSpec.describe 'IssuesController', type: :request do
         end
       end
     end
+  end
+
+  # PUT
+  describe 'Updating an existing Issue' do
+    context 'with a valid request URL' do
+      context 'when there are no existing issues' do
+        before(:all) do
+          DatabaseCleaner.clean_with(:truncation)
+        end
+        it 'returns a 404 not found response code' do
+          put "/api/v1/issues/1", as: :json
+          expect(response).to have_http_status(:not_found)
+        end
+      end
+      context 'when there are existing issues' do
+        issue_count = 10
+        before(:all) do
+          DatabaseCleaner.clean_with(:truncation)
+          FactoryBot.create_list(:issue, issue_count)
+          selected_issue = Faker::Number.between(from: 1, to: issue_count)
+        end
+        context 'when the specified issue ID does not exist' do
+          it 'returns a 404 not found response code' do
+            put "/api/v1/issues/#{issue_count + 1}", as: :json
+            expect(response).to have_http_status(:not_found)
+          end
+        end
+        context 'when the request body contains a single attribute' do
+          issue_att = FactoryBot.attributes_for :issue
+          single_att = { 'subject'=>'test subject' }
+          excluded = ["id", "created_at", "updated_at"]
+          before(:all) do
+            put "/api/v1/issues/1", { params: issue_att.merge(single_att), as: :json }
+          end
+          it 'returns a 200 success response code' do
+            expect(response).to have_http_status(:ok)
+          end
+          it 'returns a response body containing the updated attribute' do
+            parsed_response = JSON.parse(response.body)
+            parsed_att = JSON.parse(issue_att.to_json)
+            expect(parsed_response['subject']).to eq(single_att['subject'])
+          end
+          it 'does not alter any other attributes' do
+            parsed_response = JSON.parse(response.body)
+            parsed_att = JSON.parse(issue_att.to_json)
+            to_exclude = excluded << 'subject'
+            expect(parsed_response.without(*to_exclude)).to eq(parsed_att.without('subject'))
+          end
+        end
+        context 'when the request body contains all attributes' do
+          issue_att = FactoryBot.attributes_for :issue
+          excluded = ["id", "created_at", "updated_at"]
+          before(:all) do
+            put "/api/v1/issues/1", { params: issue_att, as: :json }
+          end
+          it 'returns a 200 success response code' do
+            expect(response).to have_http_status(:ok)
+          end
+          it 'returns a response body containing the same attributes' do
+            parsed_response = JSON.parse(response.body)
+            parsed_att = JSON.parse(issue_att.to_json)
+            expect(parsed_response.without(*excluded)).to eq(parsed_att)
+          end
+        end
+        context 'when the request body contains an additional attribute' do
+          issue_att = FactoryBot.attributes_for :issue
+          excluded = ["id", "created_at", "updated_at"]
+          before(:all) do
+            put "/api/v1/issues/1", { params: issue_att.merge(unknown: 'abcd'), as: :json }
+          end
+          it 'returns a 200 success response code' do
+            expect(response).to have_http_status(:ok)
+          end
+          it 'returns a response body containing correct attributes' do
+            parsed_response = JSON.parse(response.body)
+            parsed_att = JSON.parse(issue_att.to_json)
+            expect(parsed_response.without(*excluded)).to eq(parsed_att)
+          end
+        end
+        context 'when no request body is provided' do
+          it 'throws a param missing error' do
+            expect {
+              put "/api/v1/issues/1", as: :json
+            }.to raise_error(ActionController::ParameterMissing)
+          end
+        end
+        context 'when the request body is empty' do
+          it 'throws a param missing error' do
+            expect {
+              put "/api/v1/issues/1", { params: "", as: :json }
+            }.to raise_error(ActionController::ParameterMissing)
+          end
+        end
+        context 'when the request body is nil' do
+          it 'throws a param missing error' do
+            expect {
+              put "/api/v1/issues/1", { params: nil, as: :json }
+            }.to raise_error(ActionController::ParameterMissing)
+          end
+        end
+      end
+    end
+    context 'without an Issue ID in the request URL' do
+      it 'throws a routing error' do
+        expect {
+          issue_att = FactoryBot.attributes_for :issue
+          put "/api/v1/issues", { params: issue_att, as: :json }
+        }.to raise_error(ActionController::RoutingError)
+      end
+    end
+    context 'when an ID of 0 is requested' do
+      it 'returns a 404 not found response code' do
+        put "/api/v1/issues/0", as: :json
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+    context 'when a negative ID is requested' do
+      it 'returns a 404 not found response code' do
+        put "/api/v1/issues/-1", as: :json
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+    context 'when a non-numerical ID is requested' do
+      it 'returns a 404 not found response code' do
+        put "/api/v1/issues/invalid", as: :json
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+  end
+
+  # DELETE
+  describe 'Deleting an Issue' do
   end
 
 end
