@@ -346,6 +346,71 @@ RSpec.describe 'Issues Controller', type: :request do
 
   # DELETE
   describe 'Deleting an Issue' do
+    context 'with a valid request URL' do
+      context 'when there are no existing issues' do
+        before(:all) do
+          DatabaseCleaner.clean_with(:truncation)
+        end
+        it 'returns a 404 not found response code' do
+          delete "/api/v1/issues/1", as: :json
+          expect(response).to have_http_status(:not_found)
+        end
+      end
+      context 'when there are existing issues' do
+        issue_count = 10
+        selected_issue = Faker::Number.between(from: 1, to: issue_count)
+        before(:all) do
+          DatabaseCleaner.clean_with(:truncation)
+          FactoryBot.create_list(:issue, issue_count)
+        end
+        context 'when the specified issue ID does not exist' do
+          it 'returns a 404 not found response code' do
+            delete "/api/v1/issues/#{issue_count + 1}", as: :json
+            expect(response).to have_http_status(:not_found)
+          end
+        end
+        context 'when the issue is found' do
+          before(:all) do
+            delete "/api/v1/issues/#{selected_issue}", as: :json
+          end
+          it 'returns a 204 no content response code' do
+            expect(response).to have_http_status(:no_content)
+          end
+          it 'returns a non-nil response' do
+            expect(response).not_to be(nil)
+          end
+          it 'returns a response body with an empty string' do
+            expect(response.body).to eq('')
+          end
+        end
+      end
+    end
+    context 'without an Issue ID in the request URL' do
+      it 'throws a routing error' do
+        expect {
+          issue_att = FactoryBot.attributes_for :issue
+          delete "/api/v1/issues", { params: issue_att, as: :json }
+        }.to raise_error(ActionController::RoutingError)
+      end
+    end
+    context 'when an ID of 0 is requested' do
+      it 'returns a 404 not found response code' do
+        delete "/api/v1/issues/0", as: :json
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+    context 'when a negative ID is requested' do
+      it 'returns a 404 not found response code' do
+        delete "/api/v1/issues/-1", as: :json
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+    context 'when a non-numerical ID is requested' do
+      it 'returns a 404 not found response code' do
+        delete "/api/v1/issues/invalid", as: :json
+        expect(response).to have_http_status(:not_found)
+      end
+    end
   end
 
 end
