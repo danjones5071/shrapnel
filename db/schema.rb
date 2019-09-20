@@ -13,13 +13,13 @@
 ActiveRecord::Schema.define(version: 2019_07_25_025946) do
 
   create_table "issues", force: :cascade do |t|
+    t.string "assignee"
+    t.text "description"
+    t.date "due_date"
+    t.integer "estimate"
+    t.string "issue_status", null: false
     t.string "issue_type", limit: 32, null: false
     t.string "subject", limit: 32, null: false
-    t.text "description"
-    t.string "issue_status", null: false
-    t.string "assignee"
-    t.integer "estimate"
-    t.date "due_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
