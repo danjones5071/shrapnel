@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
-  root 'site#index'
+  root to: redirect('/issues')
+
+  get 'issues', to: 'site#index'
+  get 'issues/new', to: 'site#index'
+  get 'issues/:id', to: 'site#index'
+  get 'issues/:id/edit', to: 'site#index'
 
   namespace :api do
     namespace :v1 do
