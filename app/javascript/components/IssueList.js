@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -10,7 +11,9 @@ class IssueList extends React.Component {
 
     return issues.map(issue => (
       <li key={issue.id}>
-        {issue.subject}
+        <Link to={`/issues/${issue.id}`}>
+          {issue.id}{' '}{issue.subject}
+        </Link>
       </li>
     ));
   }
